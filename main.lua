@@ -11,13 +11,24 @@ function snake:draw()
     for i = 1, #self.body do
         local x = self.body[i][1]
         local y = self.body[i][2]
-        love.graphics.setColor(DARK_GREEN)
+        love.graphics.setColor(GREEN)
         love.graphics.rectangle("fill", OFFSET + x * CELL_SIZE, OFFSET + y * CELL_SIZE, CELL_SIZE, CELL_SIZE)
     end
 end
 
 function snake:update()
-    -- Ehh nothing yet
+    -- yay
+    table.insert(self.body, 1, Vector2Add(self.body[1], self.direction))
+    if not self.addSegment then
+        table.remove(self.body)
+    else
+        self.addSegment = false
+    end
+end
+
+function snake:reset()
+    self.body = { {6, 9}, {5, 9}, {4, 9} }
+    self.direction = {1, 0}
 end
 
 function snake:move(key)
@@ -36,6 +47,11 @@ function snake:move(key)
     end
 end
 
+local game = {
+    isRunning = true
+}
+
+
 function love.keypressed(key)
     snake:move(key)
 end
@@ -46,6 +62,10 @@ function love.load()
 end
 
 function love.update(dt)
+
+    if game.isRunning and CheckInterval(0.1) then
+        snake:update()
+    end
 end
 
 function love.draw()
