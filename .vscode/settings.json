@@ -1,0 +1,17 @@
+{
+    "Lua.diagnostics.disable": [
+        "unused-local",
+        "lowercase-global"
+    ],
+    "editor.fontSize": 25,
+    "files.autoSave": "afterDelay",
+    "editor.fontFamily": "Cascadia code",
+    "code-runner.executorMap": {
+        "lua": "love .",
+    },
+    "code-runner.clearPreviousOutput": true,
+    "code-runner.runInTerminal": true,
+    "code-runner.saveAllFilesBeforeRun": true,
+    "code-runner.saveFileBeforeRun": true,
+
+}

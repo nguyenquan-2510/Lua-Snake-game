@@ -1,0 +1,38 @@
+variables:
+    color:
+        green: 173, 204, 96, 255
+        dark green: 43, 51, 24, 255
+    cell size: 30
+    cell count: 25
+    offset: 75
+    screen_w: 750 + offset
+    screen_h: 750 + offset
+
+classes:
+    food:
+        position,
+        draw() function,
+        # Maybe more but im lazy
+    
+    snake:
+        body array: (6, 9), (5, 9), (4, 9)
+        direction:
+            type: vector
+            value: {1, 0}
+        function: 
+            draw(),
+            update(),
+            reset(),
+
+    game:
+        running: true
+        score: 0
+        functions:
+            draw(),
+            update(),
+            check_collision()
+            game_over()
+
+other:
+    sound: # can find in the D:\Cpp-test\*.mp3
+        
