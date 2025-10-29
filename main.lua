@@ -70,10 +70,12 @@ end
 
 function love.draw()
 
-    -- Draw background and border
-    love.graphics.setBackgroundColor(0, 0, 0)
-    love.graphics.setColor(DARK_GREEN)
-    love.graphics.rectangle("line", OFFSET - 5, OFFSET - 5, SCREEN_W - 2 * OFFSET + 10, SCREEN_H - 2 * OFFSET + 10)
+    if game.isRunning then
+        -- Draw background and border
+        love.graphics.setBackgroundColor(0, 0, 0)
+        love.graphics.setColor(DARK_GREEN)
+        love.graphics.rectangle("line", OFFSET - 5, OFFSET - 5, SCREEN_W - 2 * OFFSET + 10,     SCREEN_H - 2 * OFFSET + 10)
 
-    snake:draw()
+        snake:draw()
+    end
 end
