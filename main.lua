@@ -71,6 +71,7 @@ end
 local game = {
     isRunning = true,
     score = 0,
+    finalScore = 0,
 
     draw = function()
         Snake:draw()
@@ -87,8 +88,8 @@ local game = {
     checkCollisionWithFood = function(self)
         if Vector2Equal(Snake.body[1], Food.position) then
             Snake.addSegment = true
-            Food:Generate_random_pos(Snake.body)
             self.score = self.score + 1
+            Food:Generate_random_pos(Snake.body)
             local eat = love.audio.newSource("assets/eat.mp3", "static")
             love.audio.play(eat)
             print("Score: " .. self.score)
@@ -127,14 +128,15 @@ local game = {
     end,
 
     gameover = function(self)
+        self.finalScore = self.score
         local wall = love.audio.newSource("assets/wall.mp3", "static")
         love.audio.play(wall)
 
+        self.isRunning = false
         Snake:reset()
         Food:Generate_random_pos(Snake.body)
         self.score = 0
 
-        self.isRunning = false
     end
 
 
@@ -142,6 +144,9 @@ local game = {
 
 function love.keypressed(key)
     Snake:move(key)
+    if key == "escape" and not game.isRunning then
+        love.event.quit()
+    end
 end
 
 function love.load()
@@ -157,7 +162,7 @@ function love.update(dt)
         return
     end
 
-    if CheckInterval(0.15) then
+    if game.isRunning and CheckInterval(0.2) then
         game:update()
     end
 end
@@ -170,11 +175,23 @@ function love.draw()
         love.graphics.setColor(DARK_GREEN)
         love.graphics.rectangle("line", OFFSET - 5, OFFSET - 5, SCREEN_W - 2 * OFFSET + 10,     SCREEN_H - 2 * OFFSET + 10)
 
+
+        -- Score display
+        love.graphics.setColor(DARK_GREEN)
+        love.graphics.setNewFont(30)
+        love.graphics.printf("Score: " .. game.score, OFFSET / 2, OFFSET / 2 - 15, SCREEN_W - OFFSET, "left")
+
         game:draw()
+
+
     else
+
         love.graphics.setColor(1, 1, 1)
         love.graphics.setFont(font)
-        love.graphics.printf("Game Over! Press Space to Restart", 0, SCREEN_H * 2 / 3 - 10, SCREEN_W, "center")
+
+        love.graphics.printf("Final Score: " .. game.finalScore, 0, SCREEN_H / 2 - 40, SCREEN_W, "center")
+
+        love.graphics.printf("Game Over! Press Space to Restart", 0, SCREEN_H / 2 + 40, SCREEN_W, "center")
         if love.keyboard.isDown("space") then
             game.isRunning = true
             Snake:reset()
