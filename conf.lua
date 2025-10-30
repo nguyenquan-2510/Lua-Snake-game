@@ -15,17 +15,11 @@ LAST_UPDATE_TIME = 0
 
 -- Add 2 Vector2
 function Vector2Add(Vector2_A, Vector2_B)
-    if #Vector2_A ~= 2 or #Vector2_B ~= 2 then
-        error("Both parameters must be Vector2")
-    end
     return { Vector2_A[1] + Vector2_B[1], Vector2_A[2] + Vector2_B[2] }
 end
 
 -- Compare 2 vectors
 function Vector2Equal(Vector2_A, Vector2_B)
-    if #Vector2_A ~= 2 or #Vector2_B ~= 2 then
-        error("Both parameters must be Vector2")
-    end
     return Vector2_A[1] == Vector2_B[1] and Vector2_A[2] == Vector2_B[2]
 end
 
