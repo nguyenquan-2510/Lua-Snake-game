@@ -1,4 +1,3 @@
-local love = require 'love'
 
 -- Variables
 GREEN = {0, 1, 0}
@@ -50,7 +49,7 @@ end
 
 
 function love.conf(t)
-    t.console = true
+    t.console = false
     t.window.width = SCREEN_W
     t.window.height = SCREEN_H
     t.window.title = "Snake Game - Lua x LOVE2D"

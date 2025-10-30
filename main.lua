@@ -1,7 +1,5 @@
 math.randomseed(os.time())
 
-local love = require 'love'
-
 local Snake = {}
 
 Snake.body = { {6, 9}, {5, 9}, {4, 9} }
