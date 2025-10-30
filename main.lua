@@ -115,26 +115,36 @@ local game = {
     end,
 
     checkCollisionWithSelf = function(self)
-        local headless_body = Snake.body
-        table.remove(headless_body, 1)
-        for i = 1, #headless_body do
-            if Vector2Equal(Food.position, headless_body[i]) then
-                self.isRunning = false
-                local wall = love.audio.newSource("assets/wall.mp3", "static")
-                love.audio.play(wall)
-                print("Game Over! Final Score: " .. self.score)
-                self:gameover()
-            end
+    local head = Snake.body[1]
+    local body_copy = {}
+
+    for i = 2, #Snake.body do
+        table.insert(body_copy, Snake.body[i])
+    end
+
+    for i = 1, #body_copy do
+        if Vector2Equal(head, body_copy[i]) then
+            self.isRunning = false
+            local wall = love.audio.newSource("assets/wall.mp3", "static")
+            love.audio.play(wall)
+            print("Game Over! Final Score: " .. self.score)
+            self:gameover()
+            return
         end
-    end,
+    end
+end,
+
     gameover = function(self)
+        local wall = love.audio.newSource("assets/wall.mp3", "static")
+        love.audio.play(wall)
+
         Snake:reset()
         Food:Generate_random_pos(Snake.body)
         self.score = 0
-        local wall = love.audio.newSource("assets/wall.mp3", "static")
-        love.audio.play(wall)
+
         self.isRunning = false
-    end
+end
+
 
 }
 
@@ -144,6 +154,7 @@ end
 
 function love.load()
     -- local eat = love.audio.newSource("assets/eat.mp3", "static")
+    font = love.graphics.newFont(30)
 
     Food:Generate_random_pos(Snake.body)
 end
@@ -170,8 +181,9 @@ function love.draw()
         game:draw()
     else
         love.graphics.setColor(1, 1, 1)
-        love.graphics.printf("Game Over! Press Enter to Restart", 0, SCREEN_H / 2 - 10, SCREEN_W, "center")
-        if love.keyboard.isDown("return") then
+        love.graphics.setFont(font)
+        love.graphics.printf("Game Over! Press Space to Restart", 0, SCREEN_H / 2 - 10, SCREEN_W, "center")
+        if love.keyboard.isDown("space") then
             game.isRunning = true
             Snake:reset()
             Food:Generate_random_pos(Snake.body)
