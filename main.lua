@@ -157,7 +157,6 @@ function love.load()
 end
 
 function love.update(dt)
-
     if not game.isRunning then
         return
     end
@@ -182,8 +181,6 @@ function love.draw()
         love.graphics.printf("Score: " .. game.score, OFFSET / 2, OFFSET / 2 - 15, SCREEN_W - OFFSET, "left")
 
         game:draw()
-
-
     else
 
         love.graphics.setColor(1, 1, 1)
