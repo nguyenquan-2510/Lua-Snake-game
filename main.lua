@@ -35,16 +35,12 @@ end
 function Snake:move(key)
     if key == "up" and self.direction[2] ~= 1 then
         self.direction = {0, -1}
-        print(self.direction[1], self.direction[2])
     elseif key == "down" and self.direction[2] ~= -1 then
         self.direction = {0, 1}
-        print(self.direction[1], self.direction[2])
     elseif key == "left" and self.direction[1] ~= 1 then
         self.direction = {-1, 0}
-        print(self.direction[1], self.direction[2])
     elseif key == "right" and self.direction[1] ~= -1 then
         self.direction = {1, 0}
-        print(self.direction[1], self.direction[2])
     end
 end
 
@@ -113,24 +109,24 @@ local game = {
     end,
 
     checkCollisionWithSelf = function(self)
-    local head = Snake.body[1]
-    local body_copy = {}
+        local head = Snake.body[1]
+        local body_copy = {}
 
-    for i = 2, #Snake.body do
-        table.insert(body_copy, Snake.body[i])
-    end
-
-    for i = 1, #body_copy do
-        if Vector2Equal(head, body_copy[i]) then
-            self.isRunning = false
-            local wall = love.audio.newSource("assets/wall.mp3", "static")
-            love.audio.play(wall)
-            print("Game Over! Final Score: " .. self.score)
-            self:gameover()
-            return
+        for i = 2, #Snake.body do
+            table.insert(body_copy, Snake.body[i])
         end
-    end
-end,
+
+        for i = 1, #body_copy do
+            if Vector2Equal(head, body_copy[i]) then
+                self.isRunning = false
+                local wall = love.audio.newSource("assets/wall.mp3", "static")
+                love.audio.play(wall)
+                print("Game Over! Final Score: " .. self.score)
+                self:gameover()
+                return
+            end
+        end
+    end,
 
     gameover = function(self)
         local wall = love.audio.newSource("assets/wall.mp3", "static")
@@ -141,7 +137,7 @@ end,
         self.score = 0
 
         self.isRunning = false
-end
+    end
 
 
 }
@@ -180,7 +176,7 @@ function love.draw()
     else
         love.graphics.setColor(1, 1, 1)
         love.graphics.setFont(font)
-        love.graphics.printf("Game Over! Press Space to Restart", 0, SCREEN_H / 2 - 10, SCREEN_W, "center")
+        love.graphics.printf("Game Over! Press Space to Restart", 0, SCREEN_H * 2 / 3 - 10, SCREEN_W, "center")
         if love.keyboard.isDown("space") then
             game.isRunning = true
             Snake:reset()
