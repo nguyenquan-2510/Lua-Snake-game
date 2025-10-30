@@ -1,13 +1,13 @@
 
 local love = require 'love'
 
-local snake = {}
+local Snake = {}
 
-snake.body = { {6, 9}, {5, 9}, {4, 9} }
-snake.direction = {1, 0}
-snake.addSegment = false
+Snake.body = { {6, 9}, {5, 9}, {4, 9} }
+Snake.direction = {1, 0}
+Snake.addSegment = false
 
-function snake:draw()
+function Snake:draw()
     for i = 1, #self.body do
         local x = self.body[i][1]
         local y = self.body[i][2]
@@ -16,7 +16,7 @@ function snake:draw()
     end
 end
 
-function snake:update()
+function Snake:update()
     -- yay
     table.insert(self.body, 1, Vector2Add(self.body[1], self.direction))
     if not self.addSegment then
@@ -26,12 +26,12 @@ function snake:update()
     end
 end
 
-function snake:reset()
+function Snake:reset()
     self.body = { {6, 9}, {5, 9}, {4, 9} }
     self.direction = {1, 0}
 end
 
-function snake:move(key)
+function Snake:move(key)
     if key == "up" and self.direction[2] ~= 1 then
         self.direction = {0, -1}
         print(self.direction[1], self.direction[2])
@@ -53,7 +53,7 @@ local game = {
 
 
 function love.keypressed(key)
-    snake:move(key)
+    Snake:move(key)
 end
 
 function love.load()
@@ -64,7 +64,7 @@ end
 function love.update(dt)
 
     if game.isRunning and CheckInterval(0.1) then
-        snake:update()
+        Snake:update()
     end
 end
 
@@ -76,6 +76,6 @@ function love.draw()
         love.graphics.setColor(DARK_GREEN)
         love.graphics.rectangle("line", OFFSET - 5, OFFSET - 5, SCREEN_W - 2 * OFFSET + 10,     SCREEN_H - 2 * OFFSET + 10)
 
-        snake:draw()
+        Snake:draw()
     end
 end
